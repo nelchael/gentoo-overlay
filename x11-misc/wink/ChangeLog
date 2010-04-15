@@ -1,0 +1,10 @@
+# ChangeLog for x11-misc/wink
+# Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*wink-1.5.1060 (03 Feb 2010)
+
+  03 Feb 2010; Krzysiek Pawlik <nelchael@gentoo.org> +wink-1.5.1060.ebuild,
+  +metadata.xml:
+  Initial version.
+

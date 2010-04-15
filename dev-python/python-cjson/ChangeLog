@@ -1,0 +1,8 @@
+# ChangeLog for dev-python/python-cjson
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  12 Feb 2009; Krzysiek Pawlik <nelchael@gentoo.org> +metadata.xml,
+  python-cjson-1.0.5.ebuild:
+  Fix copyright year, add metadata.
+
