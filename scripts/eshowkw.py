@@ -2,6 +2,17 @@
 
 import sys
 import os
+
+search_path = os.getcwd()
+while search_path != '/':
+	if os.path.exists(os.path.join(search_path, 'profiles/repo_name')):
+		print 'Appending %s to PORTDIR_OVERLAY...' % search_path
+		if 'PORTDIR_OVERLAY' not in os.environ:
+			os.environ['PORTDIR_OVERLAY'] = search_path
+		else:
+			os.environ['PORTDIR_OVERLAY'] += ' ' + search_path
+	search_path = os.path.dirname(search_path)
+
 import portage
 import portage.versions as portage_versions
 import portage.output as output
