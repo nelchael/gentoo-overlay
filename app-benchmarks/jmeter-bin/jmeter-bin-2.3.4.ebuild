@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/app-benchmarks/jmeter/jmeter-2.0.1-r4.ebuild,v 1.2 2008/10/24 20:36:23 maekke Exp $
 
@@ -24,5 +24,6 @@ src_prepare() {
 src_install() {
 	dodir /opt/${PN}
 	cp -aR * "${D}/opt/${PN}/"
-	dosym "/opt/${PN}/bin/jmeter" "/usr/bin/jmeter"
+	dobin "${FILESDIR}/jmeter"
+	chmod 755 "${D}/usr/bin/jmeter"
 }
