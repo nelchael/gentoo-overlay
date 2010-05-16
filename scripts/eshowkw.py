@@ -94,6 +94,7 @@ def flagFor(arch, keywords, myArch):
 
 def showMe(myArch, db, pkg):
 	pkg, versions = resolvePackage(db, pkg)
+	print '>>> Keywords for', pkg
 	archs = []
 	for i in open(portage.settings['PORTDIR'] + '/profiles/arch.list').readlines():
 		if i == '':
