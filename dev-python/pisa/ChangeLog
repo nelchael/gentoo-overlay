@@ -1,0 +1,9 @@
+# ChangeLog for dev-python/pisa
+# Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*pisa-3.0.33 (04 Oct 2010)
+
+  04 Oct 2010; Krzysztof Pawlik <nelchael@gentoo.org> +pisa-3.0.33.ebuild:
+  New package: dev-python/pisa - an HTML to PDF converter.
+
