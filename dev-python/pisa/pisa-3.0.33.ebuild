@@ -15,5 +15,6 @@ IUSE=""
 
 RDEPEND="dev-python/reportlab
 	dev-python/html5lib
-	dev-python/imaging"
+	dev-python/imaging
+	dev-python/pyPdf"
 DEPEND="${RDEPEND}"

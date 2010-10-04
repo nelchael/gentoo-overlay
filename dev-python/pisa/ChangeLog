@@ -3,6 +3,9 @@
 # $Header: $
 
   04 Oct 2010; Krzysztof Pawlik <nelchael@gentoo.org> pisa-3.0.33.ebuild:
+  Add dev-python/pyPdf to dependencies.
+
+  04 Oct 2010; Krzysztof Pawlik <nelchael@gentoo.org> pisa-3.0.33.ebuild:
   Update SRC_URI to use mirror:// for pypi.
 
   04 Oct 2010; Krzysztof Pawlik <nelchael@gentoo.org> +metadata.xml:
