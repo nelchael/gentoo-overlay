@@ -14,5 +14,6 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND="dev-python/reportlab
-	dev-python/html5lib"
+	dev-python/html5lib
+	dev-python/imaging"
 DEPEND="${RDEPEND}"
