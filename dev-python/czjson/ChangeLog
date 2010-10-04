@@ -3,6 +3,9 @@
 # $Header: $
 
   04 Oct 2010; Krzysztof Pawlik <nelchael@gentoo.org> czjson-1.0.8.ebuild:
+  Update SRC_URI to use mirror:// for pypi.
+
+  04 Oct 2010; Krzysztof Pawlik <nelchael@gentoo.org> czjson-1.0.8.ebuild:
   Add ~x86.
 
   07 Sep 2010; Krzysztof Pawlik <nelchael@gentoo.org> ChangeLog:

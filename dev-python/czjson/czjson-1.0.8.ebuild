@@ -6,7 +6,7 @@ inherit distutils
 
 DESCRIPTION="Fast JSON encoder/decoder for Python"
 HOMEPAGE="http://pypi.python.org/pypi/czjson"
-SRC_URI="http://pypi.python.org/packages/source/c/${PN}/${P}.tar.gz"
+SRC_URI="mirror://pypi/c/${PN}/${P}.tar.gz"
 
 LICENSE="LGPL-2"
 SLOT="0"
