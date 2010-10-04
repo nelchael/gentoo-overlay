@@ -2,6 +2,9 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  04 Oct 2010; Krzysztof Pawlik <nelchael@gentoo.org> czjson-1.0.8.ebuild:
+  Add ~x86.
+
   07 Sep 2010; Krzysztof Pawlik <nelchael@gentoo.org> ChangeLog:
   Initial version.
 
