@@ -6,7 +6,7 @@ inherit distutils
 
 DESCRIPTION="Converter for HTML/XHTML and CSS to PDF"
 HOMEPAGE="http://www.xhtml2pdf.com/"
-SRC_URI="http://pypi.python.org/packages/source/p/${PN}/${P}.tar.gz"
+SRC_URI="mirror://pypi/p/${PN}/${P}.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="0"
