@@ -9,7 +9,7 @@ LICENSE="Apache-2.0"
 
 SLOT="0"
 IUSE="doc"
-KEYWORDS="amd64 x86"
+KEYWORDS="~amd64 ~x86"
 
 DEPEND=">=virtual/jdk-1.4"
 RDEPEND=">=virtual/jre-1.4"
