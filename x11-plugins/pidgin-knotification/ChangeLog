@@ -2,6 +2,13 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*pidgin-knotification-0.3 (17 Nov 2010)
+*pidgin-knotification-0.2 (17 Nov 2010)
+
+  17 Nov 2010; Krzysztof Pawlik <nelchael@gentoo.org>
+  +pidgin-knotification-0.2.ebuild, +pidgin-knotification-0.3.ebuild:
+  Version bump.
+
   15 Nov 2010; Krzysztof Pawlik <nelchael@gentoo.org>
   +pidgin-knotification-0.1.ebuild, +metadata.xml:
   Initial ebuild for pidgin-knotification-0.1.
