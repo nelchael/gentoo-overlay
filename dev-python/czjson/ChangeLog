@@ -1,6 +1,9 @@
 # ChangeLog for dev-python/czjson
-# Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  13 Apr 2011; Krzysztof Pawlik <nelchael@gentoo.org> czjson-1.0.8.ebuild:
+  EAPI bump.
 
   15 Nov 2010; Krzysztof Pawlik <nelchael@gentoo.org> metadata.xml:
   Reformat metadata.xml.
