@@ -1,6 +1,11 @@
 # ChangeLog for x11-plugins/pidgin-knotification
-# Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  06 Jun 2011; Krzysztof Pawlik <nelchael@gentoo.org>
+  -pidgin-knotification-0.1.ebuild, -pidgin-knotification-0.2.ebuild,
+  pidgin-knotification-0.3.ebuild:
+  Remove old versions, update digest, small QA fixes.
 
 *pidgin-knotification-0.3 (17 Nov 2010)
 *pidgin-knotification-0.2 (17 Nov 2010)

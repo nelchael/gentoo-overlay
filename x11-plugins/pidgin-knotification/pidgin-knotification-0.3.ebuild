@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -21,14 +21,14 @@ RDEPEND="net-im/pidgin
 DEPEND="${RDEPEND}
 		dev-util/pkgconfig"
 
-S="${WORKDIR}/${PN}"
+S="${WORKDIR}/nelchael-${PN}-bc97ad7f9e00/"
 
 src_compile() {
 	CXX=$(tc-getCC) emake
 }
 
 src_install() {
-	dodir "${ROOT}/usr/$(get_libdir)/pidgin"
+	dodir "/usr/$(get_libdir)/pidgin"
 	cp "${PN}.so" "${D}/${ROOT}/usr/$(get_libdir)/pidgin/" || die "cp failed"
 
 	dodoc README
