@@ -171,4 +171,4 @@ for i in portage.settings['ACCEPT_KEYWORDS'].split():
 	if i[0] == '~':
 		myArch = i[1:]
 
-showMe(myArch, portage.portdbapi(portage.settings['PORTDIR']), pkg)
+showMe(myArch, portage.portdbapi(mysettings=portage.settings), pkg)

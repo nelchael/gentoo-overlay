@@ -87,7 +87,7 @@ echo(output.green('Using DB directories: '))
 for i in DBPATHS:
 	echo(output.blue('  * ') + i)
 
-db = portage.portdbapi(portdir)
+db = portage.portdbapi(mysettings=portage.settings)
 
 if not silent:
 	print output.green('Gathering files...  '),
