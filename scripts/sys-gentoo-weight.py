@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import os, sys, output
+import os, sys, portage.output as output
 
 spinpos = 0
 spinner = "/-\\|/-\\|/-\\|/-\\|\\-/|\\-/|\\-/|\\-/|"
