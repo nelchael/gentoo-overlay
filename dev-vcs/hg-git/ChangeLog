@@ -2,6 +2,10 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-vcs/hg-git/ChangeLog,v 1.24 2011/05/22 14:33:31 josejx Exp $
 
+  11 Sep 2011; Krzysztof Pawlik <nelchael@gentoo.org>
+  -hg-git-0.2.6_p20110705.ebuild, -hg-git-0.2.6_p20110727.ebuild:
+  Remove snapshots.
+
 *hg-git-0.3.0 (11 Sep 2011)
 
   11 Sep 2011; Krzysztof Pawlik <nelchael@gentoo.org> +hg-git-0.3.0.ebuild:
