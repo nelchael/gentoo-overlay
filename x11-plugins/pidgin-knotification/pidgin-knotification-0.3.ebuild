@@ -21,7 +21,7 @@ RDEPEND="net-im/pidgin
 DEPEND="${RDEPEND}
 		dev-util/pkgconfig"
 
-S="${WORKDIR}/nelchael-${PN}-bc97ad7f9e00/"
+S="${WORKDIR}/nelchael-${P}"
 
 src_compile() {
 	CXX=$(tc-getCC) emake
