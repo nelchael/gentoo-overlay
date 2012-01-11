@@ -5,7 +5,7 @@
 EAPI=4
 WANT_AUTOMAKE="1.10"
 
-inherit autotools rpm
+inherit autotools rpm flag-o-matic
 
 DESCRIPTION="Driver (and PPDs) for Epson Stylus NX110, NX115, SX110, SX115, TX110, TX111, TX112, TX113, TX115, TX117 and TX119"
 HOMEPAGE="http://avasys.jp/eng/linux_driver/download/lsb/epson-inkjet/escp/"
@@ -30,12 +30,27 @@ src_unpack() {
 
 src_prepare() {
 	sed -i \
-		-e 's,CUPS_SERVER_DIR=.*$,CUPS_SERVER_DIR=/usr/libexec/cups,g' \
+		-e "s,CUPS_SERVER_DIR=.*$,CUPS_SERVER_DIR=/usr/libexec/cups,g" \
+		-e "s,CORE_RESOURCE_PATH=.*$,CORE_RESOURCE_PATH=/usr/share/${PN}/resource,g" \
 		configure.ac
 
 	eautoreconf
 
 	chmod +x ./configure
+
+	local DATA_DIR="${WORKDIR}/epson-inkjet-printer-stylus-nx110-series-${PV}"
+	cd "${DATA_DIR}/ppds"
+	sed -i \
+		-e "s,/opt/epson-inkjet-printer-stylus-nx110-series/cups/lib/filter/epson_inkjet_printer_filter,/usr/libexec/cups/filter/epson_inkjet_printer_filter,g" \
+		-e "s,/opt/epson-inkjet-printer-stylus-nx110-series,/usr/share/${PN},g" \
+		*.ppd
+}
+
+src_configure() {
+	# The filter *NEEDS* to link agains libstdc++ to succesfully load libraries
+	# at runtime, ugly.
+	append-ldflags $(no-as-needed)
+	econf
 }
 
 src_install() {
@@ -45,21 +60,29 @@ src_install() {
 
 	local DATA_DIR="${WORKDIR}/epson-inkjet-printer-stylus-nx110-series-${PV}"
 
-	dodir "/opt/${PN}/lib32"
-	insinto "/opt/${PN}/lib32"
-	doins "${DATA_DIR}/lib/"*
-
-	dodir "/opt/${PN}/lib64"
-	insinto "/opt/${PN}/lib64"
-	doins "${DATA_DIR}/lib64/"*
-
-	dodir "/etc/ld.so.conf.d/"
-	echo "/opt/${PN}/lib32" >> "${D}/etc/ld.so.conf.d/${PN}.conf"
-	echo "/opt/${PN}/lib64" >> "${D}/etc/ld.so.conf.d/${PN}.conf"
+	# Those precompiled libraries *NEED* to go to /usr/lib*, not anywhere else,
+	# filter checks for exact paths.
+	if use x86; then
+		dodir "/usr/lib"
+		insinto "/usr/lib"
+		doins "${DATA_DIR}/lib/"*
+	elif use amd64; then
+		dodir "/usr/lib64"
+		insinto "/usr/lib64"
+		doins "${DATA_DIR}/lib64/"*
+	fi
 
 	dodir "/usr/share/cups/model"
 	insinto "/usr/share/cups/model"
 	doins "${DATA_DIR}/ppds/"*.ppd
+
+	dodir "/usr/share/${PN}/watermark"
+	insinto "/usr/share/${PN}/watermark"
+	doins "${DATA_DIR}/watermark/"*.EID
+
+	dodir "/usr/share/${PN}/resource"
+	insinto "/usr/share/${PN}/resource"
+	doins "${DATA_DIR}/resource/"*.data
 
 	dodoc "${DATA_DIR}/AUTHORS" "${DATA_DIR}/README" "${DATA_DIR}/Manual.txt"
 }

@@ -4,6 +4,10 @@
 
   11 Jan 2012; Krzysztof Pawlik <nelchael@gentoo.org>
   epson-nx110-drivers-1.0.0.ebuild:
+  Improve build, install all needed files.
+
+  11 Jan 2012; Krzysztof Pawlik <nelchael@gentoo.org>
+  epson-nx110-drivers-1.0.0.ebuild:
   Use source RPM.
 
 *epson-nx110-drivers-1.0.0 (11 Jan 2012)
