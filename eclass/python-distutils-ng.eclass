@@ -15,18 +15,18 @@
 #
 # TODO: Document implementations!
 
-# @ECLASS-VARIABLE: USE_PYTHON
+# @ECLASS-VARIABLE: PYTHON_COMPAT
 # @DESCRIPTION:
-# This variable contains a space separated list of targets (see above) a package
-# is compatible to. It must be set before the `inherit' call. The default is to
-# enable all targets.
+# This variable contains a space separated list of implementations (see above) a
+# package is compatible to. It must be set before the `inherit' call. The
+# default is to enable all implementations.
 
-if [[ -z "${USE_PYTHON}" ]]; then
+if [[ -z "${PYTHON_COMPAT}" ]]; then
 	# Default: pure python, support all implementations
-	USE_PYTHON="  python2_5 python2_6 python2_7"
-	USE_PYTHON+=" python3_1 python3_2"
-	USE_PYTHON+=" jython2_5"
-	USE_PYTHON+=" pypy1_7 pypy1_8"
+	PYTHON_COMPAT="  python2_5 python2_6 python2_7"
+	PYTHON_COMPAT+=" python3_1 python3_2"
+	PYTHON_COMPAT+=" jython2_5"
+	PYTHON_COMPAT+=" pypy1_7 pypy1_8"
 fi
 
 # @ECLASS-VARIABLE: PYTHON_OPTIONAL
@@ -58,7 +58,7 @@ esac
 # @DESCRIPTION:
 # This function returns the full package atom of a Python implementation.
 #
-# `implementation' has to be one of the valid values for USE_PYTHON.
+# `implementation' has to be one of the valid values for PYTHON_COMPAT.
 _python-distutils-ng_generate_depend() {
 	local impl="${1/_/.}"
 	case "${impl}" in
@@ -105,7 +105,7 @@ else
 	REQUIRED_USE+="${required_use_str}"
 fi
 
-for impl in ${USE_PYTHON}; do
+for impl in ${PYTHON_COMPAT}; do
 	IUSE+=" python_targets_${impl} "
 	local dep_str="python_targets_${impl}? ( $(_python-distutils-ng_generate_depend "${impl}") )"
 
@@ -149,8 +149,8 @@ _python-distutils-ng_run_for_impl() {
 _python-distutils-ng_run_for_all_impls() {
 	local command="${1}"
 
-	for impl in ${USE_PYTHON}; do
-		use "python_targets_${impl}" ${USE_PYTHON} || continue
+	for impl in ${PYTHON_COMPAT}; do
+		use "python_targets_${impl}" ${PYTHON_COMPAT} || continue
 		_python-distutils-ng_run_for_impl "${impl}" "${command}"
 	done
 }
@@ -248,8 +248,8 @@ python-distutils-ng_newscript() {
 
 	einfo "Installing ${source_file} for multiple implementations (default: ${default_impl})"
 	insinto /usr/bin
-	for impl in ${USE_PYTHON}; do
-		use "python_targets_${impl}" ${USE_PYTHON} || continue
+	for impl in ${PYTHON_COMPAT}; do
+		use "python_targets_${impl}" ${PYTHON_COMPAT} || continue
 
 		newins "${source_file}" "${destination_file}-${impl}"
 		fperms 755 "/usr/bin/${destination_file}-${impl}"
@@ -279,8 +279,8 @@ python-distutils-ng_src_prepare() {
 	[[ "${PYTHON_OPTIONAL}" = "yes" ]] && { use python || return; }
 
 	# Try to run binary for each implementation:
-	for impl in ${USE_PYTHON}; do
-		use "python_targets_${impl}" ${USE_PYTHON} || continue
+	for impl in ${PYTHON_COMPAT}; do
+		use "python_targets_${impl}" ${PYTHON_COMPAT} || continue
 		$(_python-distutils-ng_get_binary_for_implementation "${impl}") \
 			-c "import sys" || die
 	done
@@ -292,8 +292,8 @@ python-distutils-ng_src_prepare() {
 	fi
 
 	# Create a copy of S for each implementation:
-	for impl in ${USE_PYTHON}; do
-		use "python_targets_${impl}" ${USE_PYTHON} || continue
+	for impl in ${PYTHON_COMPAT}; do
+		use "python_targets_${impl}" ${PYTHON_COMPAT} || continue
 
 		einfo "Creating copy for ${impl} in ${WORKDIR}/impl_${impl}"
 		mkdir -p "${WORKDIR}/impl_${impl}" || die
@@ -353,9 +353,9 @@ python-distutils-ng_src_install() {
 		python_install_all
 	fi
 
-	for impl in ${USE_PYTHON}; do
+	for impl in ${PYTHON_COMPAT}; do
 		[[ "${PYTHON_DISABLE_COMPILATION}" = "yes" ]] && continue
-		use "python_targets_${impl}" ${USE_PYTHON} || continue
+		use "python_targets_${impl}" ${PYTHON_COMPAT} || continue
 
 		PYTHON="$(_python-distutils-ng_get_binary_for_implementation "${impl}")"
 		for accessible_path in $(${PYTHON} -c 'import sys; print " ".join(sys.path)'); do
