@@ -1,0 +1,14 @@
+# Copyright 2009-2012 Gentoo Foundation.
+# Distributed under the terms of the GNU General Public License v2
+# $Header$
+
+# This file contains descriptions of PYTHON_TARGETS USE_EXPAND flags.
+
+python25 - Build with Python 2.5
+python26 - Build with Python 2.6
+python27 - Build with Python 2.7
+python31 - Build with Python 3.1
+python32 - Build with Python 3.2
+jython25 - Build with Jythin 2.5
+pypy17 - Build with PyPy 1.7
+pypy18 - Build with PyPy 1.8
