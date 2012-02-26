@@ -2,6 +2,9 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  26 Feb 2012; Krzysztof Pawlik <nelchael@gentoo.org> xlrd-0.7.1-r256.ebuild:
+  Ebuild cleanup.
+
 *xlrd-0.7.1-r256 (26 Feb 2012)
 
   26 Feb 2012; Krzysztof Pawlik <nelchael@gentoo.org> +xlrd-0.7.1-r256.ebuild,
