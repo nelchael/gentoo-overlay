@@ -1,0 +1,10 @@
+# ChangeLog for dev-python/xlwt
+# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*xlwt-0.7.2-r256 (26 Feb 2012)
+
+  26 Feb 2012; Krzysztof Pawlik <nelchael@gentoo.org> +xlwt-0.7.2-r256.ebuild,
+  +metadata.xml:
+  Add ebuilds testing python-distutils-ng.eclass.
+
