@@ -23,10 +23,10 @@
 
 if [[ -z "${USE_PYTHON}" ]]; then
 	# Default: pure python, support all implementations
-	USE_PYTHON="  python25 python26 python27"
-	USE_PYTHON+=" python31 python32"
-	USE_PYTHON+=" jython25"
-	USE_PYTHON+=" pypy17 pypy18"
+	USE_PYTHON="  python2_5 python2_6 python2_7"
+	USE_PYTHON+=" python3_1 python3_2"
+	USE_PYTHON+=" jython2_5"
+	USE_PYTHON+=" pypy1_7 pypy1_8"
 fi
 
 # @ECLASS-VARIABLE: PYTHON_OPTIONAL
@@ -60,13 +60,14 @@ esac
 #
 # `implementation' has to be one of the valid values for USE_PYTHON.
 _python-distutils-ng_generate_depend() {
-	case "${1}" in
-		python??)
-			echo "dev-lang/${1::-2}:${1: -2:-1}.${1: -1}" ;;
-		jython??)
-			echo "dev-java/${1::-2}:${1: -2:-1}.${1: -1}" ;;
-		pypy??)
-			echo "dev-python/${1::-2}:${1: -2:-1}.${1: -1}" ;;
+	local impl="${1/_/.}"
+	case "${impl}" in
+		python?.?)
+			echo "dev-lang/${impl::-3}:${impl: -3}" ;;
+		jython?.?)
+			echo "dev-java/${impl::-3}:${impl: -3}" ;;
+		pypy?.?)
+			echo "dev-python/${impl::-3}:${impl: -3}" ;;
 		*)
 			die "Unsupported implementation: ${1}" ;;
 	esac
@@ -81,10 +82,11 @@ _python-distutils-ng_generate_depend() {
 # Binary returned by this function should be used instead of simply calling
 # `python'.
 _python-distutils-ng_get_binary_for_implementation() {
-	case "${1}" in
-		python??|jython??)
-			echo "/usr/bin/${1::-1}.${1: -1}" ;;
-		pypy??)
+	local impl="${1/_/.}"
+	case "${impl}" in
+		python?.?|jython?.?)
+			echo "/usr/bin/${impl}" ;;
+		pypy?.?)
 			echo "TODO" ;;
 		*)
 			die "Unsupported implementation: ${1}" ;;
@@ -92,10 +94,10 @@ _python-distutils-ng_get_binary_for_implementation() {
 }
 
 required_use_str=" || (
-	python_targets_python25 python_targets_python26 python_targets_python27
-	python_targets_python31 python_targets_python32
-	python_targets_jython25
-	python_targets_pypy17 python_targets_pypy18 )"
+	python_targets_python2_5 python_targets_python2_6 python_targets_python2_7
+	python_targets_python3_1 python_targets_python3_2
+	python_targets_jython2_5
+	python_targets_pypy1_7 python_targets_pypy1_8 )"
 if [[ "${PYTHON_OPTIONAL}" = "yes" ]]; then
 	IUSE+="python"
 	REQUIRED_USE+=" python? ( ${required_use_str} )"
@@ -175,7 +177,7 @@ _python-distutils-ng_default_distutils_install() {
 # implementation.
 _python-distutils-ng_has_compileall() {
 	case "${1}" in
-		python??|jython??)
+		python?_?|jython?_?)
 			return 0 ;;
 		*)
 			return 1 ;;
@@ -190,7 +192,7 @@ _python-distutils-ng_has_compileall() {
 # modules for given implementation.
 _python-distutils-ng_has_compileall_opt() {
 	case "${1}" in
-		python??)
+		python?_?)
 			return 0 ;;
 		*)
 			return 1 ;;
@@ -222,7 +224,7 @@ python-distutils-ng_doscript() {
 # symlink to default implementation, which defaults to value of
 # PYTHON_DEFAULT_IMPLEMENTATION, if not specified the function will pick default
 # implementation: it will the be first enabled from the following list:
-#   python27, python26, python25, python32, python31, pypy18, pypy17, jython25
+#   python2_7, python2_6, python2_5, python3_2, python3_1, pypy1_8, pypy1_7, jython2_5
 python-distutils-ng_newscript() {
 	[[ -n "${1}" ]] || die "Missing source file name"
 	[[ -n "${2}" ]] || die "Missing destination file name"
@@ -232,7 +234,7 @@ python-distutils-ng_newscript() {
 
 	if [[ -z "${default_impl}" ]]; then
 		# TODO: Pick default implementation
-		for impl in python{27,26,25,32,21} pypy{18,17} jython25; do
+		for impl in python{2_7,2_6,2_5,3_2,2_1} pypy{1_8,1_7} jython2_5; do
 			use "python_targets_${impl}" || continue
 			default_impl="${impl}"
 			break;
