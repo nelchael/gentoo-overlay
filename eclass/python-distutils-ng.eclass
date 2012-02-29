@@ -39,7 +39,7 @@ fi
 # Set the value to "yes" to skip compilation and/or optimization of Python
 # modules.
 
-EXPORT_FUNCTIONS src_unpack src_prepare src_configure src_compile src_test src_install
+EXPORT_FUNCTIONS src_prepare src_configure src_compile src_test src_install
 
 case "${EAPI}" in
 	0|1|2|3)
@@ -259,19 +259,6 @@ python-distutils-ng_newscript() {
 	done
 
 	dosym "${destination_file}-${default_impl}" "/usr/bin/${destination_file}"
-}
-
-# Phase function: src_unpack
-python-distutils-ng_src_unpack() {
-	[[ "${PYTHON_OPTIONAL}" = "yes" ]] && { use python || return; }
-
-	if type python_unpack &> /dev/null; then
-		# This should not run anything specific to any single Python
-		# implementation, keep it generic:
-		python_unpack_all
-	else
-		[[ -n ${A} ]] && unpack ${A}
-	fi
 }
 
 # Phase function: src_prepare
