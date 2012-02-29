@@ -234,7 +234,7 @@ python-distutils-ng_newscript() {
 
 	if [[ -z "${default_impl}" ]]; then
 		# TODO: Pick default implementation
-		for impl in python{2_7,2_6,2_5,3_2,2_1} pypy{1_8,1_7} jython2_5; do
+		for impl in python{2_7,2_6,2_5,3_2,3_1} pypy{1_8,1_7} jython2_5; do
 			use "python_targets_${impl}" || continue
 			default_impl="${impl}"
 			break;
