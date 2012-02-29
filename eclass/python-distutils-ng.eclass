@@ -87,7 +87,7 @@ _python-distutils-ng_get_binary_for_implementation() {
 		python?.?|jython?.?)
 			echo "/usr/bin/${impl}" ;;
 		pypy?.?)
-			echo "TODO" ;;
+			echo "/usr/bin/pypy-c${impl: -3}" ;;
 		*)
 			die "Unsupported implementation: ${1}" ;;
 	esac
@@ -234,7 +234,6 @@ python-distutils-ng_newscript() {
 	local default_impl="${PYTHON_DEFAULT_IMPLEMENTATION}"
 
 	if [[ -z "${default_impl}" ]]; then
-		# TODO: Pick default implementation
 		for impl in python{2_7,2_6,2_5,3_2,3_1} pypy{1_8,1_7} jython2_5; do
 			use "python_targets_${impl}" || continue
 			default_impl="${impl}"
