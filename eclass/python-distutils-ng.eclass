@@ -132,6 +132,7 @@ _python-distutils-ng_run_for_impl() {
 
 	S="${WORKDIR}/impl_${impl}/${PACKAGE_SPECIFIC_S}"
 	PYTHON="$(_python-distutils-ng_get_binary_for_implementation "${impl}")"
+	EPYTHON="${impl/_/.}"
 
 	einfo "Running ${command} in ${S} for ${impl}"
 
