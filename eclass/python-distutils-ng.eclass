@@ -140,13 +140,13 @@ _python-distutils-ng_run_for_impl() {
 	popd &> /dev/null
 }
 
-# @FUNCTION: _python-distutils-ng_run_for_all_impls
+# @FUNCTION: _python-distutils-ng_run_for_each_impl
 # @USAGE: command_to_run
 # @DESCRIPTION:
 # Run command_to_run for all enabled Python implementations.
 #
 # See also _python-distutils-ng_run_for_impl
-_python-distutils-ng_run_for_all_impls() {
+_python-distutils-ng_run_for_each_impl() {
 	local command="${1}"
 
 	for impl in ${PYTHON_COMPAT}; do
@@ -289,7 +289,7 @@ python-distutils-ng_src_prepare() {
 
 	# Run python_prepare for each implementation:
 	if type python_prepare &> /dev/null; then
-		_python-distutils-ng_run_for_all_impls python_prepare
+		_python-distutils-ng_run_for_each_impl python_prepare
 	fi
 }
 
@@ -298,7 +298,7 @@ python-distutils-ng_src_configure() {
 	[[ "${PYTHON_OPTIONAL}" = "yes" ]] && { use python || return; }
 
 	if type python_configure &> /dev/null; then
-		_python-distutils-ng_run_for_all_impls python_configure
+		_python-distutils-ng_run_for_each_impl python_configure
 	fi
 }
 
@@ -307,9 +307,9 @@ python-distutils-ng_src_compile() {
 	[[ "${PYTHON_OPTIONAL}" = "yes" ]] && { use python || return; }
 
 	if type python_compile &> /dev/null; then
-		_python-distutils-ng_run_for_all_impls python_compile
+		_python-distutils-ng_run_for_each_impl python_compile
 	else
-		_python-distutils-ng_run_for_all_impls \
+		_python-distutils-ng_run_for_each_impl \
 			_python-distutils-ng_default_distutils_compile
 	fi
 }
@@ -319,7 +319,7 @@ python-distutils-ng_src_test() {
 	[[ "${PYTHON_OPTIONAL}" = "yes" ]] && { use python || return; }
 
 	if type python_test &> /dev/null; then
-		_python-distutils-ng_run_for_all_impls python_test
+		_python-distutils-ng_run_for_each_impl python_test
 	fi
 }
 
@@ -328,9 +328,9 @@ python-distutils-ng_src_install() {
 	[[ "${PYTHON_OPTIONAL}" = "yes" ]] && { use python || return; }
 
 	if type python_install &> /dev/null; then
-		_python-distutils-ng_run_for_all_impls python_install
+		_python-distutils-ng_run_for_each_impl python_install
 	else
-		_python-distutils-ng_run_for_all_impls \
+		_python-distutils-ng_run_for_each_impl \
 			_python-distutils-ng_default_distutils_install
 	fi
 
