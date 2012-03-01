@@ -217,14 +217,16 @@ python-distutils-ng_doscript() {
 # Install given script file in /usr/bin/ for all enabled implementations using
 # new_file_name as a base name.
 #
-# Each script copy will have the name mangled to "new_file_name-IMPLEMENTATION"
-# and new hash-bang line will be inserted to reference specific Python
-# interpreter.
+# If only one Python implementation is enabled the script will be installed
+# as-is. Otherwise each script copy will have the name mangled to
+# "new_file_name-IMPLEMENTATION". For every installed script new hash-bang line
+# will be inserted to reference specific Python interpreter.
 #
-# There will be also a symlink with name equal to new_file_name that will be a
-# symlink to default implementation, which defaults to value of
-# PYTHON_DEFAULT_IMPLEMENTATION, if not specified the function will pick default
-# implementation: it will the be first enabled from the following list:
+# In case of multiple implementations there will be also a symlink with name
+# equal to new_file_name that will be a symlink to default implementation, which
+# defaults to value of PYTHON_DEFAULT_IMPLEMENTATION, if not specified the
+# function will pick default implementation: it will the be first enabled one
+# from the following list:
 #   python2_7, python2_6, python2_5, python3_2, python3_1, pypy1_8, pypy1_7, jython2_5
 python-distutils-ng_newscript() {
 	[[ -n "${1}" ]] || die "Missing source file name"
@@ -232,12 +234,18 @@ python-distutils-ng_newscript() {
 	local source_file="${1}"
 	local destination_file="${2}"
 	local default_impl="${PYTHON_DEFAULT_IMPLEMENTATION}"
+	local enabled_impls=0
+
+	for impl in ${PYTHON_COMPAT}; do
+		use "python_targets_${impl}" || continue
+		enabled_impls=$((enabled_impls + 1))
+	done
 
 	if [[ -z "${default_impl}" ]]; then
 		for impl in python{2_7,2_6,2_5,3_2,3_1} pypy{1_8,1_7} jython2_5; do
 			use "python_targets_${impl}" || continue
 			default_impl="${impl}"
-			break;
+			break
 		done
 	else
 		use "python_targets_${impl}" || \
@@ -246,19 +254,28 @@ python-distutils-ng_newscript() {
 
 	[[ -n "${default_impl}" ]] || die "Could not select default implementation"
 
-	einfo "Installing ${source_file} for multiple implementations (default: ${default_impl})"
 	insinto /usr/bin
-	for impl in ${PYTHON_COMPAT}; do
-		use "python_targets_${impl}" ${PYTHON_COMPAT} || continue
-
-		newins "${source_file}" "${destination_file}-${impl}"
-		fperms 755 "/usr/bin/${destination_file}-${impl}"
+	if [[ "${enabled_impls}" = "1" ]]; then
+		einfo "Installing ${source_file} for single implementation: ${default_impl}"
+		newins "${source_file}" "${destination_file}"
+		fperms 755 "/usr/bin/${destination_file}"
 		sed -i \
 			-e "1i#!$(_python-distutils-ng_get_binary_for_implementation "${impl}")" \
-			"${D}/usr/bin/${destination_file}-${impl}" || die
-	done
+			"${D}/usr/bin/${destination_file}" || die
+	else
+		einfo "Installing ${source_file} for multiple implementations (default: ${default_impl})"
+		for impl in ${PYTHON_COMPAT}; do
+			use "python_targets_${impl}" ${PYTHON_COMPAT} || continue
 
-	dosym "${destination_file}-${default_impl}" "/usr/bin/${destination_file}"
+			newins "${source_file}" "${destination_file}-${impl}"
+			fperms 755 "/usr/bin/${destination_file}-${impl}"
+			sed -i \
+				-e "1i#!$(_python-distutils-ng_get_binary_for_implementation "${impl}")" \
+				"${D}/usr/bin/${destination_file}-${impl}" || die
+		done
+
+		dosym "${destination_file}-${default_impl}" "/usr/bin/${destination_file}"
+	fi
 }
 
 # Phase function: src_prepare
