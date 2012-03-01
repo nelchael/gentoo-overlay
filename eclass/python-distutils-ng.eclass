@@ -201,21 +201,24 @@ _python-distutils-ng_has_compileall_opt() {
 }
 
 # @FUNCTION: python-distutils-ng_doscript
-# @USAGE: script_file_name
+# @USAGE: script_file_name [destination_directory]
 # @DESCRIPTION:
-# Install given script file in /usr/bin/ for all enabled implementations using
-# original script name as a base name.
+# Install given script file in destination directory (for default value check
+# python-distutils-ng_newscript) for all enabled implementations using original
+# script name as a base name.
 #
-# See also python-distutils-ng_newscript
+# See also python-distutils-ng_newscript for more details.
 python-distutils-ng_doscript() {
-	python-distutils-ng_newscript "${1}" "$(basename "${1}")"
+	python-distutils-ng_newscript "${1}" "$(basename "${1}")" "${2}"
 }
 
 # @FUNCTION: python-distutils-ng_newscript
-# @USAGE: script_file_name new_file_name
+# @USAGE: script_file_name new_file_name [destination_directory]
 # @DESCRIPTION:
-# Install given script file in /usr/bin/ for all enabled implementations using
-# new_file_name as a base name.
+# Install given script file in destination directory for all enabled
+# implementations using new_file_name as a base name.
+#
+# Destination directory defaults to /usr/bin.
 #
 # If only one Python implementation is enabled the script will be installed
 # as-is. Otherwise each script copy will have the name mangled to
@@ -235,6 +238,8 @@ python-distutils-ng_newscript() {
 	local destination_file="${2}"
 	local default_impl="${PYTHON_DEFAULT_IMPLEMENTATION}"
 	local enabled_impls=0
+	local destination_directory="/usr/bin"
+	[[ -n "${3}" ]] && destination_directory="${3}"
 
 	for impl in ${PYTHON_COMPAT}; do
 		use "python_targets_${impl}" || continue
@@ -254,27 +259,28 @@ python-distutils-ng_newscript() {
 
 	[[ -n "${default_impl}" ]] || die "Could not select default implementation"
 
-	insinto /usr/bin
+	dodir "${destination_directory}"
+	insinto "${destination_directory}"
 	if [[ "${enabled_impls}" = "1" ]]; then
-		einfo "Installing ${source_file} for single implementation: ${default_impl}"
+		einfo "Installing ${source_file} for single implementation (${default_impl}) in ${destination_directory}"
 		newins "${source_file}" "${destination_file}"
-		fperms 755 "/usr/bin/${destination_file}"
+		fperms 755 "${destination_directory}/${destination_file}"
 		sed -i \
 			-e "1i#!$(_python-distutils-ng_get_binary_for_implementation "${impl}")" \
-			"${D}/usr/bin/${destination_file}" || die
+			"${D}${destination_directory}/${destination_file}" || die
 	else
-		einfo "Installing ${source_file} for multiple implementations (default: ${default_impl})"
+		einfo "Installing ${source_file} for multiple implementations (default: ${default_impl}) in ${destination_directory}"
 		for impl in ${PYTHON_COMPAT}; do
 			use "python_targets_${impl}" ${PYTHON_COMPAT} || continue
 
 			newins "${source_file}" "${destination_file}-${impl}"
-			fperms 755 "/usr/bin/${destination_file}-${impl}"
+			fperms 755 "${destination_directory}/${destination_file}-${impl}"
 			sed -i \
 				-e "1i#!$(_python-distutils-ng_get_binary_for_implementation "${impl}")" \
-				"${D}/usr/bin/${destination_file}-${impl}" || die
+				"${D}${destination_directory}/${destination_file}-${impl}" || die
 		done
 
-		dosym "${destination_file}-${default_impl}" "/usr/bin/${destination_file}"
+		dosym "${destination_file}-${default_impl}" "${destination_directory}/${destination_file}"
 	fi
 }
 
