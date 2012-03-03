@@ -118,7 +118,7 @@ for impl in ${PYTHON_COMPAT}; do
 	fi
 done
 
-PACKAGE_SPECIFIC_S="${S#${WORKDIR}/}"
+_PACKAGE_SPECIFIC_S="${S#${WORKDIR}/}"
 
 # @FUNCTION: _python-distutils-ng_run_for_impl
 # @USAGE: implementation command_to_run
@@ -130,7 +130,7 @@ _python-distutils-ng_run_for_impl() {
 	local impl="${1}"
 	local command="${2}"
 
-	S="${WORKDIR}/impl_${impl}/${PACKAGE_SPECIFIC_S}"
+	S="${WORKDIR}/impl_${impl}/${_PACKAGE_SPECIFIC_S}"
 	PYTHON="$(_python-distutils-ng_get_binary_for_implementation "${impl}")"
 	EPYTHON="${impl/_/.}"
 
@@ -307,7 +307,7 @@ python-distutils-ng_src_prepare() {
 
 		einfo "Creating copy for ${impl} in ${WORKDIR}/impl_${impl}"
 		mkdir -p "${WORKDIR}/impl_${impl}" || die
-		cp -pr "${S}" "${WORKDIR}/impl_${impl}/${PACKAGE_SPECIFIC_S}" || die
+		cp -pr "${S}" "${WORKDIR}/impl_${impl}/${_PACKAGE_SPECIFIC_S}" || die
 	done
 
 	# Run python_prepare for each implementation:
@@ -357,7 +357,7 @@ python-distutils-ng_src_install() {
 			_python-distutils-ng_default_distutils_install
 	fi
 
-	S="${WORKDIR}/${PACKAGE_SPECIFIC_S}"
+	S="${WORKDIR}/${_PACKAGE_SPECIFIC_S}"
 	if type python_install_all &> /dev/null; then
 		einfo "Running python_install_all in ${S} for all"
 		python_install_all
