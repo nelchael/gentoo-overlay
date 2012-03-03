@@ -13,7 +13,19 @@
 # The Python eclass is designed to allow an easier installation of Python
 # packages and their incorporation into the Gentoo Linux system.
 #
-# TODO: Document implementations!
+# This eclass provides functions for following phases:
+#  - src_prepare - you can define python_prepare_all function that will be run
+#    before creating implementation-specific directory and python_prepare
+#    function that will be run for each implementation
+#  - src_configure - you can define python_configure function that will be run
+#    for each implementation
+#  - src_compile - you can define python_compile function that will be run for
+#    each implementation, default function will run `setup.py build'
+#  - src_test - you can define python_test function that will be run for each
+#    implementation
+#  - src_install - you can define python_install function that will be run for
+#    each implementation and python_install_all that will be run in original
+#    directory (so it wil lnot contain any implementation-specific files)
 
 # @ECLASS-VARIABLE: PYTHON_COMPAT
 # @DESCRIPTION:
