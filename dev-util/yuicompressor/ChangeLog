@@ -1,0 +1,10 @@
+# ChangeLog for dev-util/yuicompressor
+# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*yuicompressor-2.4.7 (11 Mar 2012)
+
+  11 Mar 2012; Krzysztof Pawlik <nelchael@gentoo.org>
+  +yuicompressor-2.4.7.ebuild, +metadata.xml:
+  Add YUI Compressor - binary version.
+
