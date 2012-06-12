@@ -2,6 +2,9 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  12 Jun 2012; Krzysztof Pawlik <nelchael@gentoo.org> xlrd-0.7.7-r256.ebuild:
+  Adjust for latest version of p-d-ng.eclass.
+
 *xlrd-0.7.7-r256 (03 May 2012)
 
   03 May 2012; Krzysztof Pawlik <nelchael@gentoo.org> -xlrd-0.7.1-r256.ebuild,

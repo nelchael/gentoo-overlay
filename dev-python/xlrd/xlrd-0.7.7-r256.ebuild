@@ -23,13 +23,11 @@ python_prepare_all() {
 		-e "s,'doc,# 'doc,g" \
 		-e "s,'exa,# 'exa,g" \
 		setup.py || die
+
+	sed -i -e '1i#!/usr/bin/env python' scripts/runxlrd.py || die
 }
 
 python_install_all() {
-	rm -f "${D}/usr/bin"/*.py || die
-
-	python-distutils-ng_doscript scripts/runxlrd.py
-
 	dohtml xlrd/doc/*.html
 	if use examples; then
 		insinto "/usr/share/doc/${PF}"
